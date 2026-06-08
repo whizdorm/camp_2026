@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYF Camp 2026 — Youth Registration Portal</title>
+    <style>
+        /* --- Core Theme Variables & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Verdana', 'Geneva', sans-serif;
+        }
+
+        body {
+            background-color: #0c0c0c;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- View Screens Window Control Rails --- */
+        .view-panel {
+            background: #161616;
+            border: 1px solid #262626;
+            width: 100%;
+            max-width: 580px;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        /* --- Form Elements Layout Styles --- */
+        .header-block {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .header-block h1 {
+            color: #dfd157;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-block p {
+            font-size: 12px;
+            color: #888888;
+            margin-top: 6px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: transparent;
+            border: none;
+            color: #888888;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover { color: #ef4444; }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #dfd157;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"], input[type="tel"], select {
+            width: 100%;
+            background-color: #222222;
+            border: 1px solid #333333;
+            color: #ffffff;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, select:focus {
+            border-color: #dfd157;
+        }
+
+        /* Custom File Upload Button Styles */
+        .file-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-custom-btn {
+            background: #222222;
+            border: 1px dashed #444444;
+            color: #dddddd;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .file-custom-btn:hover {
+            background: #2a2a2a;
+            border-color: #dfd157;
+        }
+
+        .file-info-label {
+            font-size: 11px;
+            color: #666666;
+            text-align: center;
+        }
+
+        .btn-submit-action {
+            width: 100%;
+            background: #dfd157;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s, opacity 0.2s;
+        }
+
+        .btn-submit-action:hover { background: #f7e663; }
+        .btn-submit-action:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- Landing Access Point Element --- */
+        .landing-portal {
+            text-align: center;
+        }
+        .landing-portal h2 { font-size: 26px; color: #dfd157; margin-bottom: 8px; }
+        .landing-portal p { font-size: 14px; color: #888888; margin-bottom: 24px; }
+
+        /* --- Confirmation Blueprint Card Layout --- */
+        .receipt-card {
+            background: #1f1f1f;
+            border: 1px dashed #333333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 13px;
+        }
+        .receipt-row:last-child { border: none; }
+        .receipt-row span:first-child { color: #888888; }
+        .receipt-row span:last-child { font-weight: 700; color: #ffffff; }
+
+        @media (max-width: 480px) {
+            .form-row-split { grid-template-columns: 1fr; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: Home Landing Gateway Portal -->
+    <div id="homeView" class="view-panel active landing-portal">
+        <div class="header-block">
+            <h1>Anglican Youth Fellowship</h1>
+            <p>Diocese of Igbomina West — Annual Youth Camp 2026</p>
+        </div>
+        <button id="openFormBtn" class="btn-submit-action">Launch Camp Registration Form</button>
+    </div>
+
+    <!-- SCREEN 2: Live Registration Form Frame Panel -->
+    <div id="registrationView" class="view-panel">
+        <div class="header-block">
+            <h1>Camp Registration</h1>
+            <p>Please supply valid metadata parameters to process enrollment profiles</p>
+            <button id="closeFormBtn" class="close-btn" type="button">&times;</button>
+        </div>
+
+        <form id="campRegForm">
+            <div class="form-group">
+                <label for="fullname">Full Name (Surname First) *</label>
+                <input type="text" id="fullname" required placeholder="e.g. Adebayo Emmanuel Chiwendu">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">WhatsApp Phone Number *</label>
+                <input type="tel" id="phone" required placeholder="e.g. 08012345678">
+            </div>
+
+            <div class="form-row-split">
+                <div class="form-group">
+                    <label for="gender">Gender *</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age-group">Age Bracket Classification *</label>
+                    <select id="age-group" required>
+                        <option value="" disabled selected>Select...</option>
+                        <option value="12-15">12 - 15 Years</option>
+                        <option value="16-20">16 - 20 Years</option>
+                        <option value="21-30">21 - 30 Years</option>
+                        <option value="31+">31 Years & Above</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Deanery Selection Dropdown Container Slot -->
+            <div class="form-group">
+                <label for="archdeaconry">Deanery / Archdeaconry *</label>
+                <select id="archdeaconry" required>
+                    <option value="" disabled selected>Select Deanery...</option>
+                    <option value="Bishop's Court">Bishop's Court</option>
+                    <option value="Cathedral">Cathedral</option>
+                    <option value="Agbamu Archdeaconry">Agbamu Archdeaconry</option>
+                    <option value="Oke-Ola Archdeaconry">Oke-Ola Archdeaconry</option>
+                    <option value="Sanmora Archdeaconry">Sanmora Archdeaconry</option>
+                    <option value="Igbonla Archdeaconry">Igbonla Archdeaconry</option>
+                    <option value="Iludun-Oro Deanery">Iludun-Oro Deanery</option>
+                    <option value="Ipee Deanery">Ipee Deanery</option>
+                    <option value="Igosun">Igosun</option>
+                    <option value="non-diocesan">Non-Diocesan (Other)</option>
+                </select>
+            </div>
+
+            <!-- Dependent Parish Selection Routing Frame Container -->
+            <div class="form-group">
+                <label for="churchSelect">Parish / Church *</label>
+                
+                <!-- Dynamic standard choice loader dropdown -->
+                <select id="churchSelect" required>
+                    <option value="" disabled selected>Please select a Deanery first...</option>
+                </select>
+                
+                <!-- Explicit fallback layout text field element -->
+                <input type="text" id="churchInput" placeholder="Enter your non-diocesan church location details..." style="display: none;" />
+                
+                <!-- Hidden state synchronizer element container map for database payloads -->
+                <input type="hidden" id="church" required />
+            </div>
+
+            <div class="form-group">
+                <label for="unit">Preferred Camp Working Unit *</label>
+                <select id="unit" required>
+                    <option value="" disabled selected>Select Unit Choice...</option>
+                    <option value="Sanitation">Sanitation & Logistics</option>
+                    <option value="Kitchen">Kitchen & Catering Force</option>
+                    <option value="Security">Security & Crowd Management</option>
+                    <option value="Protocol">Protocol, Media & Ushering</option>
+                    <option value="Prayer">Prayer & Intercessory Unit</option>
+                    <option value="Medical">Medical Response Team</option>
+                </select>
+            </div>
+
+            <!-- Local Base64 FileReader Photo Payload Transceiver Target -->
+            <div class="form-group">
+                <label>Passport Photo Upload *</label>
+                <div class="file-upload-wrapper">
+                    <label for="passport" class="file-custom-btn">Select Passport File</label>
+                    <input type="file" id="passport" accept="image/*" required style="display: none;">
+                    <div id="file-chosen" class="file-info-label">Upload compressed image (Max 600KB)</div>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-submit-action">Submit Registration Profile</button>
+        </form>
+    </div>
+
+    <!-- SCREEN 3: Success Confirmation View Card Interface -->
+    <div id="confirmationView" class="view-panel">
+        <div class="header-block" style="margin-bottom: 15px;">
+            <div style="font-size: 40px; color: #22c55e; margin-bottom: 5px;">✓</div>
+            <h1>Profile Saved Successfully</h1>
+            <p>Your registration record has been committed to the secure cloud directory.</p>
+        </div>
+
+        <div class="receipt-card">
+            <div class="receipt-row"><span>Full Name:</span><span id="summaryName">—</span></div>
+            <div class="receipt-row"><span>Phone Line:</span><span id="summaryPhone">—</span></div>
+            <div class="receipt-row"><span>Deanery Link:</span><span id="summaryArch">—</span></div>
+            <div class="receipt-row"><span>Local Parish:</span><span id="summaryChurch">—</span></div>
+            <div class="receipt-row"><span>Assigned Unit:</span><span id="summaryUnit">—</span></div>
+        </div>
+
+        <button id="backToHomeBtn" class="btn-submit-action" style="background: #222222; color: #ffffff; border: 1px solid #333333;">Close & Return to Home</button>
+    </div>
+
+    <!-- Firebase App Integration Framework Modules (v12.14.0 Delivery Pipelines) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCh9kKfG2A3uKRmmNfRkmDVvngO4lm2zAQ",
+            authDomain: "ayf-2026-camp.firebaseapp.com",
+            projectId: "ayf-2026-camp",
+            storageBucket: "ayf-2026-camp.firebasestorage.app",
+            messagingSenderId: "604967885680",
+            appId: "1:604967885680:web:e048c131e49d7f573a0db5",
+            measurementId: "G-QW8VWV58Z3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // Map Dependent Parish Dictionary Metadata Arrays Matrix
+        const parishData = {
+            "Bishop's Court": [
+                "Archbishop Ephraim Ademowo Chapel of Divine Fruitfulness, Bishop's Court, Oke-Osin, Iludun-Oro"
+            ],
+            "Cathedral": [
+                "Cathedral Church",
+                "St. James' Youth Chapel"
+            ],
+            "Agbamu Archdeaconry": [
+                "St. Paul's, Agbamu",
+                "Christ Church, Were",
+                "New Covenant Church, Isale Agbamu",
+                "Anglican Church of Pentecost, Ago Ishola",
+                "Anglican Chapel of Divine Providence, Araro/Eyeba"
+            ],
+            "Oke-Ola Archdeaconry": [
+                "Holy Trinity Church, Oke-Ola, Oro",
+                "Messiah Church, Irebode",
+                "Church of Advent, Oke-Ola, Oro",
+                "Christ the Redeemer, Oke-Ola, Oro",
+                "Church of Epiphany, Oke-Ola, Oro",
+                "Anglican Church of Good News, Ago Iyanu",
+                "Anglican Church of Pentecost (ANCOPEN), Muskow, Oro"
+            ],
+            "Sanmora Archdeaconry": [
+                "St. Barnabas' Church, Sanmora (Includes the Hausa Section)",
+                "Our Saviour's Church, Agbeoola",
+                "Church of Transfiguration, Ilala / Anglican Church, Eggi Oyo-Ipo",
+                "Anglican Church, Buari / Church of Transformation, Araromi-Ipo"
+            ],
+            "Igbonla Archdeaconry": [
+                "St. John's Church, Igbonla",
+                "St. Peter's Church, Egudu-Oja",
+                "Anglican Church, Olate"
+            ],
+            "Iludun-Oro Deanery": [
+                "Church of the Ascension, Oke-Osin, Iludun-Oro",
+                "Church of Resurrection, Oke-Omore, Iludun-Eju"
+            ],
+            "Ipee Deanery": [
+                "St. Stephen's Church, Ipee",
+                "Anglican Model Parish, Ipee",
+                "Anglican Church, Ago Baba Osi"
+            ],
+            "Igosun": [
+                "St. Michael's Church, Igosun",
+                "Calvary Church, Obada/Amberi/Eleyoka",
+                "House of Prayer for All Nations Church, Igosun"
+            ]
+        };
+
+        // Layout Element Pointers Binding Matrix
+        const homeView = document.getElementById('homeView');
+        const registrationView = document.getElementById('registrationView');
+        const confirmationView = document.getElementById('confirmationView');
+        
+        const openFormBtn = document.getElementById('openFormBtn');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+        
+        const regForm = document.getElementById('campRegForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const passportInput = document.getElementById('passport');
+        const fileChosen = document.getElementById('file-chosen');
+
+        // Dynamic Field Layout Elements Binding Context
+        const deanerySelect = document.getElementById('archdeaconry');
+        const churchSelect = document.getElementById('churchSelect');
+        const churchInput = document.getElementById('churchInput');
+        const hiddenChurchValue = document.getElementById('church');
+
+        // Core Layout Navigations Routing Logic
+        openFormBtn.addEventListener('click', () => {
+            homeView.classList.remove('active');
+            registrationView.classList.add('active');
+        });
+
+        closeFormBtn.addEventListener('click', () => {
+            registrationView.classList.remove('active');
+            homeView.classList.add('active');
+        });
+
+        // Dependent Dropdown Router Intercept Logic
+        deanerySelect.addEventListener('change', () => {
+            const selectedDeanery = deanerySelect.value;
+            
+            // Instantly wipe and flush dependent value parameters to original blank values
+            churchSelect.innerHTML = '<option value="" disabled selected>Select your Parish...</option>';
+            churchInput.value = "";
+            hiddenChurchValue.value = "";
+
+            if (selectedDeanery === "non-diocesan") {
+                churchSelect.style.display = "none";
+                churchSelect.removeAttribute('required');
+                
+                churchInput.style.display = "block";
+                churchInput.setAttribute('required', 'true');
+            } else {
+                churchInput.style.display = "none";
+                churchInput.removeAttribute('required');
+                
+                churchSelect.style.display = "block";
+                churchSelect.setAttribute('required', 'true');
+
+                const parishes = parishData[selectedDeanery] || [];
+                parishes.forEach(parish => {
+                    const opt = document.createElement('option');
+                    opt.value = parish;
+                    opt.textContent = parish;
+                    churchSelect.appendChild(opt);
+                });
+            }
+        });
+
+        // Route real-time values into unified payload tracker elements
+        churchSelect.addEventListener('change', () => { hiddenChurchValue.value = churchSelect.value; });
+        churchInput.addEventListener('input', () => { hiddenChurchValue.value = churchInput.value.trim(); });
+
+        // Enforce Local Browser Validation on Selected Photo Array Sizes
+        passportInput.addEventListener('change', () => {
+            if (passportInput.files.length > 0) {
+                const file = passportInput.files[0];
+                
+                // Firestore document limitation gate safely capped at 600KB
+                if (file.size > 600 * 1024) {
+                    alert("This file footprint is too large. Image attributes must fall under 600KB to safely translate to textual Base64 maps.");
+                    passportInput.value = ""; 
+                    fileChosen.textContent = "Upload compressed image (Max 600KB)";
+                    fileChosen.style.color = "#ef4444";
+                    return;
+                }
+
+                fileChosen.textContent = file.name;
+                fileChosen.style.color = "#22c55e";
+            } else {
+                fileChosen.textContent = "Upload compressed image (Max 600KB)";
+                fileChosen.style.color = "#666666";
+            }
+        });
+
+        // Local Binary Reader Thread to Base64 Textual Compilation Promise Container
+        const convertFileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+            });
+        };
+
+        // Form Submission Control Engine Pipeline
+        regForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Compiling Passport String...";
+
+            const selectedImageFile = passportInput.files[0];
+            let base64ImageString = "";
+
+            if (selectedImageFile) {
+                try {
+                    base64ImageString = await convertFileToBase64(selectedImageFile);
+                } catch (conversionError) {
+                    console.error("FileReader process exception caught:", conversionError);
+                    alert("Local data compilation routine failed. Try another picture profile.");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit Registration Profile";
+                    return;
+                }
+            }
+
+            submitBtn.textContent = "Saving Profile Matrix...";
+
+            // Match exact production collection layout validation requirements schema
+            const payload = {
+                fullname: document.getElementById('fullname').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                archdeaconry: deanerySelect.value,
+                church: hiddenChurchValue.value,
+                ageGroup: document.getElementById('age-group').value,
+                gender: document.getElementById('gender').value,
+                unit: document.getElementById('unit').value,
+                passportUrl: base64ImageString, 
+                hasPaid: false,       
+                isCheckedIn: false,   
+                isDeleted: false,     
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, "registrations"), payload);
+
+                // Inject saved string fields into confirmation window template elements
+                document.getElementById('summaryName').textContent = payload.fullname;
+                document.getElementById('summaryPhone').textContent = payload.phone;
+                document.getElementById('summaryArch').textContent = payload.archdeaconry;
+                document.getElementById('summaryChurch').textContent = payload.church;
+                document.getElementById('summaryUnit').textContent = payload.unit;
+
+                registrationView.classList.remove('active');
+                confirmationView.classList.add('active');
+            } catch (firestoreError) {
+                console.error("Firestore serialization failed:", firestoreError);
+                if (firestoreError.code === "resource-exhausted") {
+                    alert("Database transmission failed. The image data was too large for Firestore's 1MB document capacity framework limit.");
+                } else {
+                    alert("An error occurred while saving your details to the registry database.");
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Registration Profile";
+            }
+        });
+
+        // Reset layouts back to core starting default visibility layers
+        backToHomeBtn.addEventListener('click', () => {
+            regForm.reset();
+            
+            // Re-verify that dependent dropdown configurations point back to fresh starting layouts
+            churchSelect.style.display = "block";
+            churchSelect.setAttribute('required', 'true');
+            churchSelect.innerHTML = '<option value="" disabled selected>Please select a Deanery first...</option>';
+            
+            churchInput.style.display = "none";
+            churchInput.removeAttribute('required');
+            churchInput.value = "";
+            
+            fileChosen.textContent = "Upload compressed image (Max 600KB)";
+            fileChosen.style.color = "#666666";
+            
+            confirmationView.classList.remove('active');
+            homeView.classList.add('active');
+        });
+    </script>
+</body>
+</html>
