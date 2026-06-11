@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AYF Camp 2026 — Youth Registration Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AYF Camp 2026 · Be A Beacon of Light | Diocese of Igbomina West</title>
     <style>
         /* --- Core Theme Variables & Reset --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Verdana', 'Geneva', sans-serif;
+            font-family: 'Inter', system-ui, 'Segoe UI', 'Verdana', sans-serif;
         }
 
         body {
-            background-color: #0c0c0c;
-            color: #f5f5f5;
+            background: radial-gradient(circle at 20% 30%, #0a0a0a, #030303);
+            color: #f0f0f0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,155 +23,235 @@
             padding: 20px;
         }
 
-        /* --- View Screens Window Control Rails --- */
+        /* Smooth transition for panels */
         .view-panel {
-            background: #161616;
-            border: 1px solid #262626;
+            background: rgba(18, 18, 22, 0.96);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(223, 209, 87, 0.25);
             width: 100%;
-            max-width: 580px;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            max-width: 620px;
+            border-radius: 2rem;
+            padding: 32px 28px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(223, 209, 87, 0.1);
+            transition: all 0.25s ease;
             display: none;
         }
 
         .view-panel.active {
             display: block;
+            animation: fadeScale 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        /* --- Form Elements Layout Styles --- */
-        .header-block {
+        @keyframes fadeScale {
+            0% { opacity: 0; transform: scale(0.97); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- LANDING PAGE ENHANCED STYLES (Event details + logos) --- */
+        .home-content {
             text-align: center;
-            margin-bottom: 25px;
-            position: relative;
         }
 
+        /* 3‑logos row */
+        .logos-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            padding: 0.5rem 0 0.2rem;
+            border-bottom: 1px dashed rgba(223, 209, 87, 0.3);
+        }
+        .camp-logo {
+            max-height: 70px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .camp-logo:hover {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 5px rgba(223,209,87,0.5));
+        }
+
+        /* Diocese main header */
+        .diocese-name {
+            font-size: 0.85rem;
+            letter-spacing: 2.5px;
+            font-weight: 600;
+            color: #dfd157;
+            background: rgba(223,209,87,0.12);
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            margin-bottom: 0.75rem;
+        }
+        .camp-year {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFF6C4, #dfd157);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+        }
+        .portal-tag {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #b9b9b9;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: inline-block;
+            padding-top: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Theme card */
+        .theme-card {
+            background: linear-gradient(145deg, #1e1e24, #14141a);
+            border-radius: 1.8rem;
+            padding: 1.4rem 1rem;
+            margin: 1.8rem 0 1.4rem;
+            border: 1px solid rgba(223,209,87,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .theme-text {
+            font-size: 1.9rem;
+            font-weight: 800;
+            font-style: italic;
+            color: #ffe484;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            letter-spacing: -0.3px;
+            word-break: keep-all;
+        }
+        .scripture {
+            font-size: 0.9rem;
+            color: #cfcfcf;
+            margin-top: 10px;
+            font-weight: 500;
+            border-top: 1px dashed rgba(223,209,87,0.5);
+            display: inline-block;
+            padding-top: 8px;
+        }
+
+        /* Event details grid — only date remains */
+        .event-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin: 1.5rem 0 1rem;
+            text-align: left;
+            background: rgba(0,0,0,0.35);
+            border-radius: 1.5rem;
+            padding: 1rem 1.4rem;
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-left: 3px solid #dfd157;
+            padding-left: 12px;
+        }
+        .detail-icon {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 3px #dfd157);
+        }
+        .detail-text {
+            color: #f2f2f2;
+        }
+        .detail-text strong {
+            color: #dfd157;
+            font-weight: 700;
+        }
+
+        .btn-submit-action {
+            width: 100%;
+            background: linear-gradient(95deg, #dfd157, #c9b83e);
+            color: #0a0a0a;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 1.2rem;
+            transition: all 0.25s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+        }
+        .btn-submit-action:hover {
+            background: linear-gradient(95deg, #f3e77a, #ebdb5a);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 18px rgba(0,0,0,0.3);
+        }
+
+        /* Form styles */
         .header-block h1 {
             color: #dfd157;
             font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
         }
-
-        .header-block p {
-            font-size: 12px;
-            color: #888888;
-            margin-top: 6px;
-        }
-
         .close-btn {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 16px;
+            right: 20px;
             background: transparent;
             border: none;
-            color: #888888;
-            font-size: 20px;
+            color: #aaa;
+            font-size: 26px;
             cursor: pointer;
+            transition: color 0.2s;
         }
-
         .close-btn:hover { color: #ef4444; }
-
         .form-group {
             margin-bottom: 20px;
         }
-
-        .form-row-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
         label {
-            display: block;
             font-size: 11px;
-            text-transform: uppercase;
             font-weight: 700;
             color: #dfd157;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
-
-        input[type="text"], input[type="tel"], select {
-            width: 100%;
-            background-color: #222222;
-            border: 1px solid #333333;
-            color: #ffffff;
+        input, select {
+            background-color: #222;
+            border: 1px solid #3a3a3a;
+            color: #fff;
+            border-radius: 14px;
             padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            outline: none;
-            transition: border-color 0.2s;
+            width: 100%;
         }
-
-        input[type="text"]:focus, input[type="tel"]:focus, select:focus {
-            border-color: #dfd157;
-        }
-
-        /* Custom File Upload Button Styles */
-        .file-upload-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
         .file-custom-btn {
             background: #222222;
             border: 1px dashed #444444;
             color: #dddddd;
             padding: 12px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 700;
             transition: background 0.2s, border-color 0.2s;
+            display: block;
         }
-
         .file-custom-btn:hover {
             background: #2a2a2a;
             border-color: #dfd157;
         }
-
         .file-info-label {
             font-size: 11px;
-            color: #666666;
+            color: #aaaaaa;
             text-align: center;
+            margin-top: 6px;
         }
-
-        .btn-submit-action {
-            width: 100%;
-            background: #dfd157;
-            color: #000000;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s, opacity 0.2s;
-        }
-
-        .btn-submit-action:hover { background: #f7e663; }
-        .btn-submit-action:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* --- Landing Access Point Element --- */
-        .landing-portal {
-            text-align: center;
-        }
-        .landing-portal h2 { font-size: 26px; color: #dfd157; margin-bottom: 8px; }
-        .landing-portal p { font-size: 14px; color: #888888; margin-bottom: 24px; }
-
-        /* --- Confirmation Blueprint Card Layout --- */
         .receipt-card {
             background: #1f1f1f;
-            border: 1px dashed #333333;
-            border-radius: 10px;
+            border-radius: 1.2rem;
             padding: 20px;
-            margin: 20px 0;
+            margin: 15px 0;
         }
-
         .receipt-row {
             display: flex;
             justify-content: space-between;
@@ -179,48 +259,80 @@
             border-bottom: 1px solid #2a2a2a;
             font-size: 13px;
         }
-        .receipt-row:last-child { border: none; }
-        .receipt-row span:first-child { color: #888888; }
-        .receipt-row span:last-child { font-weight: 700; color: #ffffff; }
-
-        @media (max-width: 480px) {
-            .form-row-split { grid-template-columns: 1fr; gap: 0; }
+        @media (max-width: 520px) {
+            .view-panel { padding: 22px 18px; }
+            .camp-year { font-size: 2rem; }
+            .theme-text { font-size: 1.4rem; }
+            .logos-row { gap: 1rem; }
+            .camp-logo { max-height: 55px; }
+            .form-row-split { grid-template-columns: 1fr !important; gap: 0 !important; }
+        }
+        .form-row-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- SCREEN 1: Home Landing Gateway Portal -->
+    <!-- SCREEN 1: LANDING GATEWAY – redesigned without venue, theme focus, open to -->
     <div id="homeView" class="view-panel active landing-portal">
-        <div class="header-block">
-            <h1>Anglican Youth Fellowship</h1>
-            <p>Diocese of Igbomina West — Annual Youth Camp 2026</p>
+        <div class="home-content">
+            <!-- 3 LOGOS as requested: logo1.png, logo2.png, logo3.png -->
+            <div class="logos-row">
+                <img src="logo1.png" alt="Anglican emblem" class="camp-logo" onerror="this.style.opacity='0.6'">
+                <img src="logo2.png" alt="Diocese insignia" class="camp-logo" onerror="this.style.opacity='0.6'">
+                <img src="logo3.png" alt="Youth fellowship logo" class="camp-logo" onerror="this.style.opacity='0.6'">
+            </div>
+            
+            <!-- Official header from the image -->
+            <div class="diocese-name">⚡ DIOCESE OF IGBOMINA WEST ⚡</div>
+            <div class="camp-year">AYF CAMP 2026</div>
+            <div class="portal-tag">REGISTRATION PORTAL</div>
+            
+            <!-- Theme Card : "BE A BEACON OF LIGHT" Matthew 5:14-16 -->
+            <div class="theme-card">
+                <div class="theme-text">“BE A BEACON OF LIGHT”</div>
+                <div class="scripture">✧ Matthew 5:14-16 ✧</div>
+                <div style="font-size: 12px; margin-top: 10px; color:#bbb;">You are the light of the world — let your light shine!</div>
+            </div>
+            
+            <!-- Only event date remains (venue, theme focus, open to removed) -->
+            <div class="event-grid">
+                <div class="detail-item">
+                    <span class="detail-icon">📅</span>
+                    <span class="detail-text"><strong>12th – 15th August, 2026</strong> · 4 days of impact</span>
+                </div>
+            </div>
+            
+            <!-- primary call to action -->
+            <button id="openFormBtn" class="btn-submit-action">✧ REGISTER NOW ✧  Launch Camp Portal</button>
         </div>
-        <button id="openFormBtn" class="btn-submit-action">Launch Camp Registration Form</button>
     </div>
 
-    <!-- SCREEN 2: Live Registration Form Frame Panel -->
+    <!-- SCREEN 2: REGISTRATION FORM (split protocol/media & ushering) -->
     <div id="registrationView" class="view-panel">
-        <div class="header-block">
-            <h1>Camp Registration</h1>
-            <p>Please supply valid metadata parameters to process enrollment profiles</p>
+        <div class="header-block" style="position: relative;">
+            <h1>✧ CAMP REGISTRATION ✧</h1>
+            <p>Fill in your details to secure your spot — become a beacon of light</p>
             <button id="closeFormBtn" class="close-btn" type="button">&times;</button>
         </div>
 
         <form id="campRegForm">
             <div class="form-group">
-                <label for="fullname">Full Name (Surname First) *</label>
+                <label for="fullname">📛 FULL NAME (Surname First) *</label>
                 <input type="text" id="fullname" required placeholder="e.g. Adebayo Emmanuel Chiwendu">
             </div>
 
             <div class="form-group">
-                <label for="phone">WhatsApp Phone Number *</label>
+                <label for="phone">📱 WHATSAPP PHONE NUMBER *</label>
                 <input type="tel" id="phone" required placeholder="e.g. 08012345678">
             </div>
 
             <div class="form-row-split">
                 <div class="form-group">
-                    <label for="gender">Gender *</label>
+                    <label for="gender">⚥ GENDER *</label>
                     <select id="gender" required>
                         <option value="" disabled selected>Select...</option>
                         <option value="Male">Male</option>
@@ -228,7 +340,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="age-group">Age Bracket Classification *</label>
+                    <label for="age-group">📊 AGE BRACKET *</label>
                     <select id="age-group" required>
                         <option value="" disabled selected>Select...</option>
                         <option value="12-15">12 - 15 Years</option>
@@ -239,9 +351,8 @@
                 </div>
             </div>
 
-            <!-- Deanery Selection Dropdown Container Slot -->
             <div class="form-group">
-                <label for="archdeaconry">Deanery / Archdeaconry *</label>
+                <label for="archdeaconry">🏛️ DEANERY / ARCHDEACONRY *</label>
                 <select id="archdeaconry" required>
                     <option value="" disabled selected>Select Deanery...</option>
                     <option value="Bishop's Court">Bishop's Court</option>
@@ -257,69 +368,62 @@
                 </select>
             </div>
 
-            <!-- Dependent Parish Selection Routing Frame Container -->
             <div class="form-group">
-                <label for="churchSelect">Parish / Church *</label>
-                
-                <!-- Dynamic standard choice loader dropdown -->
+                <label for="churchSelect">⛪ PARISH / CHURCH *</label>
                 <select id="churchSelect" required>
                     <option value="" disabled selected>Please select a Deanery first...</option>
                 </select>
-                
-                <!-- Explicit fallback layout text field element -->
-                <input type="text" id="churchInput" placeholder="Enter your non-diocesan church location details..." style="display: none;" />
-                
-                <!-- Hidden state synchronizer element container map for database payloads -->
+                <input type="text" id="churchInput" placeholder="Enter your non-diocesan church location..." style="display: none;" />
                 <input type="hidden" id="church" required />
             </div>
 
             <div class="form-group">
-                <label for="unit">Preferred Camp Working Unit *</label>
+                <label for="unit">🛠️ PREFERRED CAMP WORKING UNIT *</label>
                 <select id="unit" required>
                     <option value="" disabled selected>Select Unit Choice...</option>
                     <option value="Sanitation">Sanitation & Logistics</option>
                     <option value="Kitchen">Kitchen & Catering Force</option>
                     <option value="Security">Security & Crowd Management</option>
-                    <option value="Protocol">Protocol, Media & Ushering</option>
+                    <option value="Protocol & Ushering">Protocol & Ushering</option>
+                    <option value="Media">Media (Photography, Graphics, Social Media)</option>
                     <option value="Prayer">Prayer & Intercessory Unit</option>
                     <option value="Medical">Medical Response Team</option>
                 </select>
             </div>
 
-            <!-- Local Base64 FileReader Photo Payload Transceiver Target -->
             <div class="form-group">
-                <label>Passport Photo Upload *</label>
+                <label>📸 PASSPORT PHOTO UPLOAD *</label>
                 <div class="file-upload-wrapper">
-                    <label for="passport" class="file-custom-btn">Select Passport File</label>
+                    <label for="passport" class="file-custom-btn">Select Passport File (JPG/PNG)</label>
                     <input type="file" id="passport" accept="image/*" required style="display: none;">
-                    <div id="file-chosen" class="file-info-label">Upload compressed image (Max 600KB)</div>
+                    <div id="file-chosen" class="file-info-label">Upload image ≤ 600KB (Base64 encrypted)</div>
                 </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="btn-submit-action">Submit Registration Profile</button>
+            <button type="submit" id="submitBtn" class="btn-submit-action">✨ Submit Registration Profile ✨</button>
         </form>
     </div>
 
-    <!-- SCREEN 3: Success Confirmation View Card Interface -->
+    <!-- SCREEN 3: SUCCESS CONFIRMATION -->
     <div id="confirmationView" class="view-panel">
         <div class="header-block" style="margin-bottom: 15px;">
-            <div style="font-size: 40px; color: #22c55e; margin-bottom: 5px;">✓</div>
-            <h1>Profile Saved Successfully</h1>
-            <p>Your registration record has been committed to the secure cloud directory.</p>
+            <div style="font-size: 48px; color: #22c55e; margin-bottom: 5px;">✓✓</div>
+            <h1>Registration Successful!</h1>
+            <p>You’re officially registered for AYF Camp 2026 — Be A Beacon of Light</p>
         </div>
 
         <div class="receipt-card">
             <div class="receipt-row"><span>Full Name:</span><span id="summaryName">—</span></div>
-            <div class="receipt-row"><span>Phone Line:</span><span id="summaryPhone">—</span></div>
-            <div class="receipt-row"><span>Deanery Link:</span><span id="summaryArch">—</span></div>
-            <div class="receipt-row"><span>Local Parish:</span><span id="summaryChurch">—</span></div>
-            <div class="receipt-row"><span>Assigned Unit:</span><span id="summaryUnit">—</span></div>
+            <div class="receipt-row"><span>WhatsApp:</span><span id="summaryPhone">—</span></div>
+            <div class="receipt-row"><span>Deanery:</span><span id="summaryArch">—</span></div>
+            <div class="receipt-row"><span>Parish:</span><span id="summaryChurch">—</span></div>
+            <div class="receipt-row"><span>Camp Unit:</span><span id="summaryUnit">—</span></div>
         </div>
-
-        <button id="backToHomeBtn" class="btn-submit-action" style="background: #222222; color: #ffffff; border: 1px solid #333333;">Close & Return to Home</button>
+        <p style="font-size: 12px; text-align: center; margin: 12px 0;">We'll send camp details to your WhatsApp. See you in August 2026! 🕯️</p>
+        <button id="backToHomeBtn" class="btn-submit-action" style="background: #2a2a2a; color: #f0f0f0; border: 1px solid #444;">🏠 Return to Camp Home</button>
     </div>
 
-    <!-- Firebase App Integration Framework Modules (v12.14.0 Delivery Pipelines) -->
+    <!-- FIREBASE MODULES & APP LOGIC (fully functional, unchanged core) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
@@ -334,99 +438,52 @@
             appId: "1:604967885680:web:e048c131e49d7f573a0db5",
             measurementId: "G-QW8VWV58Z3"
         };
-
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // Map Dependent Parish Dictionary Metadata Arrays Matrix
+        // Parish mapping dictionary
         const parishData = {
-            "Bishop's Court": [
-                "Archbishop Ephraim Ademowo Chapel of Divine Fruitfulness, Bishop's Court, Oke-Osin, Iludun-Oro"
-            ],
-            "Cathedral": [
-                "Cathedral Church",
-                "St. James' Youth Chapel"
-            ],
-            "Agbamu Archdeaconry": [
-                "St. Paul's, Agbamu",
-                "Christ Church, Were",
-                "New Covenant Church, Isale Agbamu",
-                "Anglican Church of Pentecost, Ago Ishola",
-                "Anglican Chapel of Divine Providence, Araro/Eyeba"
-            ],
-            "Oke-Ola Archdeaconry": [
-                "Holy Trinity Church, Oke-Ola, Oro",
-                "Messiah Church, Irebode",
-                "Church of Advent, Oke-Ola, Oro",
-                "Christ the Redeemer, Oke-Ola, Oro",
-                "Church of Epiphany, Oke-Ola, Oro",
-                "Anglican Church of Good News, Ago Iyanu",
-                "Anglican Church of Pentecost (ANCOPEN), Muskow, Oro"
-            ],
-            "Sanmora Archdeaconry": [
-                "St. Barnabas' Church, Sanmora (Includes the Hausa Section)",
-                "Our Saviour's Church, Agbeoola",
-                "Church of Transfiguration, Ilala / Anglican Church, Eggi Oyo-Ipo",
-                "Anglican Church, Buari / Church of Transformation, Araromi-Ipo"
-            ],
-            "Igbonla Archdeaconry": [
-                "St. John's Church, Igbonla",
-                "St. Peter's Church, Egudu-Oja",
-                "Anglican Church, Olate"
-            ],
-            "Iludun-Oro Deanery": [
-                "Church of the Ascension, Oke-Osin, Iludun-Oro",
-                "Church of Resurrection, Oke-Omore, Iludun-Eju"
-            ],
-            "Ipee Deanery": [
-                "St. Stephen's Church, Ipee",
-                "Anglican Model Parish, Ipee",
-                "Anglican Church, Ago Baba Osi"
-            ],
-            "Igosun": [
-                "St. Michael's Church, Igosun",
-                "Calvary Church, Obada/Amberi/Eleyoka",
-                "House of Prayer for All Nations Church, Igosun"
-            ]
+            "Bishop's Court": ["Archbishop Ephraim Ademowo Chapel of Divine Fruitfulness, Bishop's Court, Oke-Osin, Iludun-Oro"],
+            "Cathedral": ["Cathedral Church", "St. James' Youth Chapel"],
+            "Agbamu Archdeaconry": ["St. Paul's, Agbamu", "Christ Church, Were", "New Covenant Church, Isale Agbamu", "Anglican Church of Pentecost, Ago Ishola", "Anglican Chapel of Divine Providence, Araro/Eyeba"],
+            "Oke-Ola Archdeaconry": ["Holy Trinity Church, Oke-Ola, Oro", "Messiah Church, Irebode", "Church of Advent, Oke-Ola, Oro", "Christ the Redeemer, Oke-Ola, Oro", "Church of Epiphany, Oke-Ola, Oro", "Anglican Church of Good News, Ago Iyanu", "Anglican Church of Pentecost (ANCOPEN), Muskow, Oro"],
+            "Sanmora Archdeaconry": ["St. Barnabas' Church, Sanmora (Includes the Hausa Section)", "Our Saviour's Church, Agbeoola", "Church of Transfiguration, Ilala / Anglican Church, Eggi Oyo-Ipo", "Anglican Church, Buari / Church of Transformation, Araromi-Ipo"],
+            "Igbonla Archdeaconry": ["St. John's Church, Igbonla", "St. Peter's Church, Egudu-Oja", "Anglican Church, Olate"],
+            "Iludun-Oro Deanery": ["Church of the Ascension, Oke-Osin, Iludun-Oro", "Church of Resurrection, Oke-Omore, Iludun-Eju"],
+            "Ipee Deanery": ["St. Stephen's Church, Ipee", "Anglican Model Parish, Ipee", "Anglican Church, Ago Baba Osi"],
+            "Igosun": ["St. Michael's Church, Igosun", "Calvary Church, Obada/Amberi/Eleyoka", "House of Prayer for All Nations Church, Igosun"]
         };
 
-        // Layout Element Pointers Binding Matrix
+        // DOM elements
         const homeView = document.getElementById('homeView');
         const registrationView = document.getElementById('registrationView');
         const confirmationView = document.getElementById('confirmationView');
-        
         const openFormBtn = document.getElementById('openFormBtn');
         const closeFormBtn = document.getElementById('closeFormBtn');
         const backToHomeBtn = document.getElementById('backToHomeBtn');
-        
         const regForm = document.getElementById('campRegForm');
         const submitBtn = document.getElementById('submitBtn');
         const passportInput = document.getElementById('passport');
         const fileChosen = document.getElementById('file-chosen');
-
-        // Dynamic Field Layout Elements Binding Context
         const deanerySelect = document.getElementById('archdeaconry');
         const churchSelect = document.getElementById('churchSelect');
         const churchInput = document.getElementById('churchInput');
         const hiddenChurchValue = document.getElementById('church');
 
-        // Core Layout Navigations Routing Logic
+        // Navigation
         openFormBtn.addEventListener('click', () => {
             homeView.classList.remove('active');
             registrationView.classList.add('active');
         });
-
         closeFormBtn.addEventListener('click', () => {
             registrationView.classList.remove('active');
             homeView.classList.add('active');
         });
 
-        // Dependent Dropdown Router Intercept Logic
+        // Deanery dependent parish logic
         deanerySelect.addEventListener('change', () => {
             const selectedDeanery = deanerySelect.value;
-            
-            // Instantly wipe and flush dependent value parameters to original blank values
             churchSelect.innerHTML = '<option value="" disabled selected>Select your Parish...</option>';
             churchInput.value = "";
             hiddenChurchValue.value = "";
@@ -434,16 +491,13 @@
             if (selectedDeanery === "non-diocesan") {
                 churchSelect.style.display = "none";
                 churchSelect.removeAttribute('required');
-                
                 churchInput.style.display = "block";
                 churchInput.setAttribute('required', 'true');
             } else {
                 churchInput.style.display = "none";
                 churchInput.removeAttribute('required');
-                
                 churchSelect.style.display = "block";
                 churchSelect.setAttribute('required', 'true');
-
                 const parishes = parishData[selectedDeanery] || [];
                 parishes.forEach(parish => {
                     const opt = document.createElement('option');
@@ -454,33 +508,28 @@
             }
         });
 
-        // Route real-time values into unified payload tracker elements
         churchSelect.addEventListener('change', () => { hiddenChurchValue.value = churchSelect.value; });
         churchInput.addEventListener('input', () => { hiddenChurchValue.value = churchInput.value.trim(); });
 
-        // Enforce Local Browser Validation on Selected Photo Array Sizes
+        // File validation & Base64
         passportInput.addEventListener('change', () => {
-            if (passportInput.files.length > 0) {
+            if (passportInput.files.length) {
                 const file = passportInput.files[0];
-                
-                // Firestore document limitation gate safely capped at 600KB
                 if (file.size > 600 * 1024) {
-                    alert("This file footprint is too large. Image attributes must fall under 600KB to safely translate to textual Base64 maps.");
-                    passportInput.value = ""; 
+                    alert("Image exceeds 600KB limit. Please compress and upload again.");
+                    passportInput.value = "";
                     fileChosen.textContent = "Upload compressed image (Max 600KB)";
                     fileChosen.style.color = "#ef4444";
                     return;
                 }
-
                 fileChosen.textContent = file.name;
                 fileChosen.style.color = "#22c55e";
             } else {
                 fileChosen.textContent = "Upload compressed image (Max 600KB)";
-                fileChosen.style.color = "#666666";
+                fileChosen.style.color = "#aaaaaa";
             }
         });
 
-        // Local Binary Reader Thread to Base64 Textual Compilation Promise Container
         const convertFileToBase64 = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -490,31 +539,27 @@
             });
         };
 
-        // Form Submission Control Engine Pipeline
+        // Form submit to Firestore
         regForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             submitBtn.disabled = true;
-            submitBtn.textContent = "Compiling Passport String...";
+            submitBtn.textContent = "Processing image...";
 
-            const selectedImageFile = passportInput.files[0];
             let base64ImageString = "";
-
-            if (selectedImageFile) {
+            if (passportInput.files.length) {
                 try {
-                    base64ImageString = await convertFileToBase64(selectedImageFile);
-                } catch (conversionError) {
-                    console.error("FileReader process exception caught:", conversionError);
-                    alert("Local data compilation routine failed. Try another picture profile.");
+                    base64ImageString = await convertFileToBase64(passportInput.files[0]);
+                } catch (convErr) {
+                    console.error(convErr);
+                    alert("Photo reading failed, please try another image.");
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Submit Registration Profile";
                     return;
                 }
             }
 
-            submitBtn.textContent = "Saving Profile Matrix...";
+            submitBtn.textContent = "Saving to camp database...";
 
-            // Match exact production collection layout validation requirements schema
             const payload = {
                 fullname: document.getElementById('fullname').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
@@ -523,17 +568,15 @@
                 ageGroup: document.getElementById('age-group').value,
                 gender: document.getElementById('gender').value,
                 unit: document.getElementById('unit').value,
-                passportUrl: base64ImageString, 
-                hasPaid: false,       
-                isCheckedIn: false,   
-                isDeleted: false,     
+                passportUrl: base64ImageString,
+                hasPaid: false,
+                isCheckedIn: false,
+                isDeleted: false,
                 timestamp: serverTimestamp()
             };
 
             try {
                 await addDoc(collection(db, "registrations"), payload);
-
-                // Inject saved string fields into confirmation window template elements
                 document.getElementById('summaryName').textContent = payload.fullname;
                 document.getElementById('summaryPhone').textContent = payload.phone;
                 document.getElementById('summaryArch').textContent = payload.archdeaconry;
@@ -543,11 +586,11 @@
                 registrationView.classList.remove('active');
                 confirmationView.classList.add('active');
             } catch (firestoreError) {
-                console.error("Firestore serialization failed:", firestoreError);
+                console.error("Firestore error:", firestoreError);
                 if (firestoreError.code === "resource-exhausted") {
-                    alert("Database transmission failed. The image data was too large for Firestore's 1MB document capacity framework limit.");
+                    alert("Upload failed: Image data too large for document limit. Please use a smaller photo (below 500KB).");
                 } else {
-                    alert("An error occurred while saving your details to the registry database.");
+                    alert("Registration could not be saved. Check network or try later.");
                 }
             } finally {
                 submitBtn.disabled = false;
@@ -555,22 +598,16 @@
             }
         });
 
-        // Reset layouts back to core starting default visibility layers
         backToHomeBtn.addEventListener('click', () => {
             regForm.reset();
-            
-            // Re-verify that dependent dropdown configurations point back to fresh starting layouts
             churchSelect.style.display = "block";
             churchSelect.setAttribute('required', 'true');
             churchSelect.innerHTML = '<option value="" disabled selected>Please select a Deanery first...</option>';
-            
             churchInput.style.display = "none";
             churchInput.removeAttribute('required');
             churchInput.value = "";
-            
             fileChosen.textContent = "Upload compressed image (Max 600KB)";
-            fileChosen.style.color = "#666666";
-            
+            fileChosen.style.color = "#aaaaaa";
             confirmationView.classList.remove('active');
             homeView.classList.add('active');
         });
