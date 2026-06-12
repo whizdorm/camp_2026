@@ -220,31 +220,6 @@
 
         tr:hover td { background-color: #1a1a1a; }
 
-        /* Passport Thumbnail Styles */
-        .passport-cell {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .passport-thumb {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #222222;
-            border: 2px solid #333333;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            cursor: zoom-in;
-        }
-
-        .passport-thumb:hover {
-            transform: scale(2.2);
-            border-color: #dfd157;
-            z-index: 99;
-            position: relative;
-        }
-
         /* Interactive Checklist Toggles */
         .status-toggle {
             cursor: pointer;
@@ -321,7 +296,6 @@
             td { border: none; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; }
             td::before { content: attr(data-label); font-weight: 700; color: #dfd157; font-size: 11px; text-transform: uppercase; }
             .actions-cell { width: 100%; justify-content: flex-end; }
-            .passport-cell { justify-content: flex-end; }
         }
     </style>
 </head>
@@ -493,19 +467,12 @@
                 const hasPaid = !!attendee.hasPaid;
                 const isCheckedIn = !!attendee.isCheckedIn;
 
-                // Check if a base64 passport image exists; render safe placeholder if missing
-                const imageSource = attendee.passportUrl || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23555' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
-
+                // No passport image rendering; only attendee details as plain text
                 tr.innerHTML = `
                     <td style="text-align:center;"><input type="checkbox" class="row-selector" data-id="${targetId}"></td>
                     <td data-label="Attendee Details">
-                        <div class="passport-cell">
-                            <img src="${imageSource}" class="passport-thumb" alt="Passport View">
-                            <div>
-                                <div style="font-weight:700; color:#fff;">${attendee.fullname || '—'}</div>
-                                <div style="font-size:11px; color:#888; margin-top:2px;">${attendee.phone || '—'} • ${attendee.gender || '—'} (${attendee.ageGroup || '—'})</div>
-                            </div>
-                        </div>
+                        <div style="font-weight:700; color:#fff;">${attendee.fullname || '—'}</div>
+                        <div style="font-size:11px; color:#888; margin-top:2px;">${attendee.phone || '—'} • ${attendee.gender || '—'} (${attendee.ageGroup || '—'})</div>
                     </td>
                     <td data-label="Church Network">
                         <div>${attendee.church || '—'}</div>
